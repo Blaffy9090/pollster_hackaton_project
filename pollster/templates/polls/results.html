@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<h1 class="mb-5 text-center">{{ question.question_text }}</h1>
+
+<ul class="list-group mb-5">
+	{% for choice in question.choice_set.all %}
+	<li class="list-group-item">
+		{{ choice.choice_text }}  <span class="badge badge-success float-right">{{ choice.votes }} vote{{ choice.votes | pluralize }}</span>
+	</li>
+	{% endfor %}
+</ul>
+
+<div id="myChart"></div>
+
+
+<a class="btn btn-secondary" href="{% url 'polls:index' %}">Вернуться к вопросу</a>
+<a class="btn btn-dark" href="{% url 'polls:detail' question.id %}">Проголосовать заново?</a>
+
+<script>
+
+	var state ={	
+		'items':[],
+		'values':[],
+	}
+	
+	var objId = "{{question.id}}"
+
+	var dataURL = `/polls/resultsdata/${objId}/`
+	$.ajax({
+		method:'GET',
+		url:dataURL,
+		success:function(response){
+			console.log('RESPONSE:', response)
+			for (var i in response){
+
+				var key = Object.keys(response[i])[0]
+				var value = Object.values(response[i])[0]
+				state.items.push(key)
+				state.values.push(value)
+			}
+
+			console.log('STATE:', state)
+			buildChart()
+
+		}
+	})
+	
+	function sliceIntoChunks(arr, chunkSize) {
+    const res = [];
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        const chunk = arr.slice(i, i + chunkSize);
+        res.push(chunk);
+    }
+    return res;
+	}
+	function buildChart(){
+		var chartData = {
+		
+		scale: {
+			layout: "1x3", //specify the layout by rows and columns
+		},
+		
+		graphset: [
+			//chart 1
+			{
+			type: "bar",
+			plot: {
+				styles: [ "red", "orange", "yellow", "green", "blue", "purple", "brown", "black","red", "orange", "yellow", "green", "blue", "purple", "brown", "black","red", "orange", "yellow", "green", "blue", "purple", "brown", "black","red", "orange", "yellow", "green", "blue", "purple", "brown", "black" ],
+				 'border-radius': "9px",
+			},
+			series: [{
+				"values":state.values,
+				}]
+			},
+			//chart 2
+			{
+			type: "area",
+			plot: {
+				'active-area': true
+			},
+			series: [{
+				"values":state.values,				
+				'background-color': "#666FFF #F00066", 
+				'alpha-area':0.5, 
+				}]
+			},
+			//chart 3
+			{
+			type: "ring",
+			plot: {
+				'layout': "auto",
+				'value-box': {
+				placement: "out",
+					'offset-r': "-10",
+					'font-size':15,
+					'font-weight': "normal"
+			}
+			},
+			series: [
+				{values:[state.values[0]]},
+				{values:[state.values[1]]},
+				{values:[state.values[2]]},
+				{values:[state.values[3]]},
+				{values:[state.values[4]]},
+				{values:[state.values[5]]},
+				{values:[state.values[6]]},
+				{values:[state.values[7]]},
+				{values:[state.values[8]]},
+				{values:[state.values[9]]},
+				{values:[state.values[10]]},
+				{values:[state.values[11]]},
+				{values:[state.values[12]]},
+				{values:[state.values[13]]},
+				{values:[state.values[14]]},
+				{values:[state.values[15]]},
+				{values:[state.values[16]]},
+				{values:[state.values[17]]},
+				{values:[state.values[18]]},
+				{values:[state.values[19]]},
+				{values:[state.values[20]]},
+				{values:[state.values[21]]},
+				{values:[state.values[22]]},
+				{values:[state.values[23]]},
+				{values:[state.values[24]]},
+				]
+			},
+			//chart 4
+			{
+			type: "bar",
+			stacked: true,
+			legend: {
+					visible: false
+				},
+				
+			plot:{
+							
+				barWidth: 15,
+				valueBox: {
+					text: 'Сумма всех голосов: %stack-total',
+					rules: [{
+						rule: '%stack-top == 0',
+							visible: 0
+					}]
+				 }, 
+			},						
+			series: [
+				{
+				values:[state.values[0]],
+				stack:1					
+				},
+				{
+				values:[state.values[1]],
+				stack:1
+				},
+				{
+				values:[state.values[2]],
+				stack:1
+				},
+				{
+				values:[state.values[3]],
+				stack:1
+				},
+				{
+				values:[state.values[4]],
+				stack:1
+				},
+				{
+				values:[state.values[5]],
+				stack:1
+				},
+				{
+				values:[state.values[6]],
+				stack:1
+				},
+				{
+				values:[state.values[7]],
+				stack:1
+				},
+				{
+				values:[state.values[8]],
+				stack:1
+				},
+				{
+				values:[state.values[9]],
+				stack:1
+				},
+				{
+				values:[state.values[10]],
+				stack:1
+				},
+				{
+				values:[state.values[11]],
+				stack:1
+				},
+				{
+				values:[state.values[12]],
+				stack:1
+				},
+				{
+				values:[state.values[13]],
+				stack:1
+				},
+				{
+				values:[state.values[14]],
+				stack:1
+				},
+				{
+				values:[state.values[15]],
+				stack:1
+				},
+				{
+				values:[state.values[16]],
+				stack:1
+				},
+				{
+				values:[state.values[17]],
+				stack:1
+				},
+				{
+				values:[state.values[18]],
+				stack:1
+				},
+				{
+				values:[state.values[19]],
+				stack:1
+				},
+				{
+				values:[state.values[20]],
+				stack:1
+				},
+				{
+				values:[state.values[21]],
+				stack:1
+				},
+				{
+				values:[state.values[22]],
+				stack:1
+				},
+				{
+				values:[state.values[23]],
+				stack:1
+				},
+				{
+				values:[state.values[24]],
+				stack:1
+				},
+				]
+			},
+			
+					
+		]
+		};
+ 
+		zingchart.render({
+		id: 'myChart',
+		data: chartData,
+		});
+		
+}
+
+
+	
+</script>
+<style>
+	#myChart{
+	width: 120%;
+	}
+</style>
+
+{% endblock %}

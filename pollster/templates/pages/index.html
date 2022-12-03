@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card text-center">
+  <div class="card-body">
+    <h1>Добро пожаловать на OprosHub!</h1>
+    <p>Пройти опросы</p>
+    <a class="btn btn-dark" href="{% url 'polls:index' %}"> Начать</a>
+  </div>
+</div>
+<img
+  src="https://sun9-33.userapi.com/impg/C5WV6xkMLJ-ctPZKMxt6cXFLKgQg6LnS_eWu5A/kV5daA9ChTU.jpg?size=688x564&quality=96&sign=c00dc41c6fcd8249b293c5f5846c12a8&type=album"
+  alt=""
+/>
+<style>
+  .card {
+    margin-top: 200px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    margin-left: 70%;
+    float: right;
+    right: -280px;
+  }
+  .card.text-center {
+    width: 500px;
+  }
+  img {
+    width: 600px;
+    float: left;
+    position: relative;
+    bottom: 350px;
+    left: -350px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  }
+</style>
+{% endblock %}

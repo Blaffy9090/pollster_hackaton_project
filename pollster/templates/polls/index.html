@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-center mb-3">Все опросы</h1>
+{% if latest_question_list %} {% for question in latest_question_list %}
+<div class="card mb-3">
+  <div class="card-body">
+    <p class="lead">{{ question.question_text }}</p>
+    <a
+      href="{% url 'polls:detail' question.id %}"
+      class="btn btn-warning btn-sm"
+      >Голосовать</a
+    >
+    <a
+      href="{% url 'polls:results' question.id %}"
+      class="btn btn-secondary btn-sm"
+      >Результаты</a
+    >
+  </div>
+</div>
+<style>
+  .card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+  }
+</style>
+{% endfor %} {% else %}
+<p>No polls available</p>
+{% endif %} {% endblock %}
